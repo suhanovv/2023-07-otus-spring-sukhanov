@@ -8,7 +8,9 @@
         <constructor-arg index="1" value=","/>
         <constructor-arg index="2" value=";"/>
     </bean>
+    <bean id="presenterService" class="ru.otus.homework01.services.PresenterServiceImpl" />
     <bean id="testService" class="ru.otus.homework01.services.TestServiceImpl">
         <constructor-arg index="0" ref="testDao"/>
+        <constructor-arg index="1" ref="presenterService" />
     </bean>
 </beans>

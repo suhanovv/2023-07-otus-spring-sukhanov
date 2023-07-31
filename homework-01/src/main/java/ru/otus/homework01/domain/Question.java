@@ -6,11 +6,11 @@ import java.util.List;
 public class Question {
     private final String questionText;
 
-    private final List<String> answers;
+    private final List<Answer> answers;
 
-    private final String validAnswer;
+    private final Answer validAnswer;
 
-    public Question(String questionText, List<String> answers, String validAnswer) {
+    public Question(String questionText, List<Answer> answers, Answer validAnswer) {
         this.questionText = questionText;
         this.answers = answers;
         this.validAnswer = validAnswer;
@@ -20,11 +20,11 @@ public class Question {
         return questionText;
     }
 
-    public List<String> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 
-    public String getValidAnswer() {
+    public Answer getValidAnswer() {
         return validAnswer;
     }
 }

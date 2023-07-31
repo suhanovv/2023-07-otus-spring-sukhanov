@@ -10,7 +10,7 @@ public class Homework01App {
 
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/spring-context.xml");
         TestService service = ctx.getBean(TestService.class);
-        service.showTest();
+        service.runTest();
 
     }
 

@@ -1,9 +1,12 @@
 package ru.otus.homework01.dao;
 
+import io.vavr.control.Either;
+import ru.otus.homework01.domain.Answer;
 import ru.otus.homework01.domain.Question;
-import ru.otus.homework01.domain.Test;
+import ru.otus.homework01.domain.SimpleTest;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -27,24 +30,39 @@ public class TestDaoCsv implements TestDao {
     }
 
     @Override
-    public Test loadTest() {
+    public Either<String, SimpleTest> loadTest() {
         List<Question> questions = new ArrayList<>();
 
-        InputStream is = getClass().getClassLoader().getResourceAsStream(sourcePath);
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(sourcePath)) {
 
-        InputStreamReader streamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
-        BufferedReader reader = new BufferedReader(streamReader);
-
-        try (Scanner sc = new Scanner(reader)) {
-            while (sc.hasNextLine()) {
-                questions.add(getQuestionFromLine(sc.nextLine()));
+            if (is == null) {
+                return Either.left("Не найден файл с тестом");
             }
+            InputStreamReader streamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
+            BufferedReader reader = new BufferedReader(streamReader);
+
+            try (Scanner sc = new Scanner(reader)) {
+                while (sc.hasNextLine()) {
+                    questions.add(mapQuestionFromLine(sc.nextLine()));
+                }
+            }
+        } catch (IOException e) {
+            return Either.left("Ошибка загрузки файла с тестом");
+        } catch (IndexOutOfBoundsException e) {
+            return Either.left("Некорректный формат файла");
         }
-        return new Test(questions);
+
+        return Either.right(new SimpleTest(questions));
     }
 
-    private Question getQuestionFromLine(String line) {
+    private Question mapQuestionFromLine(String line) {
         String[] cols = line.split(colDelimeter);
-        return new Question(cols[0], Arrays.asList(cols[1].split(answersDelimeter)), cols[2]);
+        String questionText = cols[0];
+        List<Answer> answers = Arrays.stream(cols[1].split(answersDelimeter))
+                .map(Answer::new)
+                .toList();
+        Answer validAnswer = new Answer(cols[2]);
+
+        return new Question(questionText, answers, validAnswer);
     }
 }

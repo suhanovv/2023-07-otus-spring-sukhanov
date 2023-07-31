@@ -1,7 +1,8 @@
 package ru.otus.homework01.dao;
 
-import ru.otus.homework01.domain.Test;
+import io.vavr.control.Either;
+import ru.otus.homework01.domain.SimpleTest;
 
 public interface TestDao {
-    Test loadTest();
+    Either<String, SimpleTest> loadTest();
 }

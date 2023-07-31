@@ -2,10 +2,10 @@ package ru.otus.homework01.domain;
 
 import java.util.List;
 
-public class Test {
+public class SimpleTest {
     private final List<Question> questions;
 
-    public Test(List<Question> questions) {
+    public SimpleTest(List<Question> questions) {
         this.questions = questions;
     }
 

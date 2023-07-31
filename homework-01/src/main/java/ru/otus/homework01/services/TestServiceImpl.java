@@ -1,40 +1,32 @@
 package ru.otus.homework01.services;
 
+import io.vavr.control.Either;
 import ru.otus.homework01.dao.TestDao;
 import ru.otus.homework01.domain.Question;
-import ru.otus.homework01.domain.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
+import ru.otus.homework01.domain.SimpleTest;
+import ru.otus.homework01.mappers.QuestionToStringMapper;
 
 public class TestServiceImpl implements TestService {
     private final TestDao dao;
 
-    public TestServiceImpl(TestDao dao) {
+    private final PresenterService presenter;
+
+    public TestServiceImpl(TestDao dao, PresenterService presenter) {
         this.dao = dao;
+        this.presenter = presenter;
     }
 
     @Override
-    public void showTest() {
-        Test test = dao.loadTest();
-        List<String> questionsAndAnswers = new ArrayList<>();
-        String newLine = System.getProperty("line.separator");
-
-        for (Question question : test.getQuestions()) {
-            questionsAndAnswers.add(question.getQuestionText());
-            ListIterator<String> answerIt = question.getAnswers().listIterator();
-
-            while (answerIt.hasNext()) {
-                int index = answerIt.nextIndex() + 1;
-                String answerText = answerIt.next();
-                if (answerText.length() == 0) {
-                    continue;
-                }
-                questionsAndAnswers.add("    " + index + ") " + answerText);
-            }
+    public void runTest() {
+        Either<String, SimpleTest> result = dao.loadTest();
+        if (result.isLeft()) {
+            presenter.display(result.getLeft());
+            return;
         }
 
-        System.out.print(String.join(newLine, questionsAndAnswers));
+        for (Question question : result.get().getQuestions()) {
+            String questionString = QuestionToStringMapper.map(question);
+            presenter.display(questionString);
+        }
     }
 }
