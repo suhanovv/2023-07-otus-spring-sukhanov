@@ -67,6 +67,6 @@ public class TestDaoCsv implements TestDao {
 
     private Answer getAnswerFromString(String answerString) {
         String[] answerParts = answerString.split(validationDelimeter);
-        return new Answer(answerParts[0], Boolean.getBoolean(answerParts[1]));
+        return new Answer(answerParts[0], Boolean.valueOf(answerParts[1]));
     }
 }
