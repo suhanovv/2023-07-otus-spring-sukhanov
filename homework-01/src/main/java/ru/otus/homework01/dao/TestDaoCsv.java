@@ -1,6 +1,6 @@
 package ru.otus.homework01.dao;
 
-import io.vavr.control.Either;
+import ru.otus.homework01.dao.exceptions.TestReadingException;
 import ru.otus.homework01.domain.Answer;
 import ru.otus.homework01.domain.Question;
 import ru.otus.homework01.domain.SimpleTest;
@@ -30,13 +30,13 @@ public class TestDaoCsv implements TestDao {
     }
 
     @Override
-    public Either<String, SimpleTest> loadTest() {
+    public SimpleTest loadTest() throws TestReadingException {
         List<Question> questions = new ArrayList<>();
 
         try (InputStream is = getClass().getClassLoader().getResourceAsStream(sourcePath)) {
 
             if (is == null) {
-                return Either.left("Не найден файл с тестом");
+                throw new TestReadingException("File with test not found");
             }
             InputStreamReader streamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
             BufferedReader reader = new BufferedReader(streamReader);
@@ -46,13 +46,10 @@ public class TestDaoCsv implements TestDao {
                     questions.add(mapQuestionFromLine(sc.nextLine()));
                 }
             }
-        } catch (IOException e) {
-            return Either.left("Ошибка загрузки файла с тестом");
-        } catch (IndexOutOfBoundsException e) {
-            return Either.left("Некорректный формат файла");
+        } catch (IOException | IndexOutOfBoundsException e) {
+            throw new TestReadingException(e);
         }
-
-        return Either.right(new SimpleTest(questions));
+        return new SimpleTest(questions);
     }
 
     private Question mapQuestionFromLine(String line) {
