@@ -7,10 +7,14 @@
         <constructor-arg index="0" value="questions.csv"/>
         <constructor-arg index="1" value=","/>
         <constructor-arg index="2" value=";"/>
+        <constructor-arg index="3" value="::" />
     </bean>
     <bean id="presenterService" class="ru.otus.homework01.services.PresenterServiceImpl" />
+    <bean id="stringMapper" class="ru.otus.homework01.mappers.QuestionToStringMapper" />
     <bean id="testService" class="ru.otus.homework01.services.TestServiceImpl">
-        <constructor-arg index="0" ref="testDao"/>
+        <constructor-arg index="0" ref="testDao" />
         <constructor-arg index="1" ref="presenterService" />
+        <constructor-arg index="2" ref="stringMapper" />
+
     </bean>
 </beans>

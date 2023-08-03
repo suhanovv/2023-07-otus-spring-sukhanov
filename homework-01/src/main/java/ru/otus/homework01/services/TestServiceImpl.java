@@ -11,9 +11,12 @@ public class TestServiceImpl implements TestService {
 
     private final PresenterService presenter;
 
-    public TestServiceImpl(TestDao dao, PresenterService presenter) {
+    private final QuestionToStringMapper mapper;
+
+    public TestServiceImpl(TestDao dao, PresenterService presenter, QuestionToStringMapper mapper) {
         this.dao = dao;
         this.presenter = presenter;
+        this.mapper = mapper;
     }
 
     @Override
@@ -21,7 +24,7 @@ public class TestServiceImpl implements TestService {
         try {
             SimpleTest result = dao.loadTest();
             for (Question question : result.getQuestions()) {
-                String questionString = QuestionToStringMapper.map(question);
+                String questionString = mapper.map(question);
                 presenter.display(questionString);
             }
         } catch (TestReadingException e) {

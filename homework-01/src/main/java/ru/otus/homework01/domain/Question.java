@@ -8,12 +8,9 @@ public class Question {
 
     private final List<Answer> answers;
 
-    private final Answer validAnswer;
-
-    public Question(String questionText, List<Answer> answers, Answer validAnswer) {
+    public Question(String questionText, List<Answer> answers) {
         this.questionText = questionText;
         this.answers = answers;
-        this.validAnswer = validAnswer;
     }
 
     public String getQuestionText() {
@@ -22,9 +19,5 @@ public class Question {
 
     public List<Answer> getAnswers() {
         return answers;
-    }
-
-    public Answer getValidAnswer() {
-        return validAnswer;
     }
 }

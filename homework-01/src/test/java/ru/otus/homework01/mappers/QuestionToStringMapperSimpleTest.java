@@ -12,13 +12,14 @@ class QuestionToStringMapperSimpleTest {
 
     @Test
     void testMapShouldReturnValidString() {
+        QuestionToStringMapper mapper = new QuestionToStringMapper();
         List<Answer> answers = List.of(
-                new Answer("Answer 1"),
-                new Answer("Answer 2"),
-                new Answer("Answer 3"),
-                new Answer("Answer 4"));
+                new Answer("Answer 1", true),
+                new Answer("Answer 2", false),
+                new Answer("Answer 3", false),
+                new Answer("Answer 4", false));
 
-        Question question = new Question("Question 1", answers, new Answer("Answer 1"));
+        Question question = new Question("Question 1", answers);
         String expected = """
                    Question 1
                        1) Answer 1
@@ -26,6 +27,6 @@ class QuestionToStringMapperSimpleTest {
                        3) Answer 3
                        4) Answer 4""";
 
-        assertEquals(expected, QuestionToStringMapper.map(question));
+        assertEquals(expected, mapper.map(question));
     }
 }

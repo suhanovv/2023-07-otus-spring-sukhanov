@@ -22,11 +22,14 @@ public class TestDaoCsv implements TestDao {
 
     private final String answersDelimeter;
 
-    public TestDaoCsv(String sourcePath, String colDelimeter, String answersDelimeter) {
+    private final String validationDelimeter;
+
+    public TestDaoCsv(String sourcePath, String colDelimeter, String answersDelimeter, String validationDelimeter) {
 
         this.sourcePath = sourcePath;
         this.colDelimeter = colDelimeter;
         this.answersDelimeter = answersDelimeter;
+        this.validationDelimeter = validationDelimeter;
     }
 
     @Override
@@ -43,7 +46,7 @@ public class TestDaoCsv implements TestDao {
 
             try (Scanner sc = new Scanner(reader)) {
                 while (sc.hasNextLine()) {
-                    questions.add(mapQuestionFromLine(sc.nextLine()));
+                    questions.add(getQuestionFromString(sc.nextLine()));
                 }
             }
         } catch (IOException | IndexOutOfBoundsException e) {
@@ -52,14 +55,18 @@ public class TestDaoCsv implements TestDao {
         return new SimpleTest(questions);
     }
 
-    private Question mapQuestionFromLine(String line) {
+    private Question getQuestionFromString(String line) {
         String[] cols = line.split(colDelimeter);
         String questionText = cols[0];
         List<Answer> answers = Arrays.stream(cols[1].split(answersDelimeter))
-                .map(Answer::new)
+                .map(this::getAnswerFromString)
                 .toList();
-        Answer validAnswer = new Answer(cols[2]);
 
-        return new Question(questionText, answers, validAnswer);
+        return new Question(questionText, answers);
+    }
+
+    private Answer getAnswerFromString(String answerString) {
+        String[] answerParts = answerString.split(validationDelimeter);
+        return new Answer(answerParts[0], Boolean.getBoolean(answerParts[1]));
     }
 }

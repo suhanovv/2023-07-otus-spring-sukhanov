@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 public final class QuestionToStringMapper {
-    public static String map(Question question) {
+    public String map(Question question) {
         List<String> questionAndAnswers = new ArrayList<>();
         questionAndAnswers.add(question.getQuestionText());
         String newLine = System.getProperty("line.separator");

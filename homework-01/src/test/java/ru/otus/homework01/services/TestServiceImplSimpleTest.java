@@ -9,6 +9,7 @@ import ru.otus.homework01.dao.exceptions.TestReadingException;
 import ru.otus.homework01.domain.Answer;
 import ru.otus.homework01.domain.Question;
 import ru.otus.homework01.domain.SimpleTest;
+import ru.otus.homework01.mappers.QuestionToStringMapper;
 
 import java.util.List;
 
@@ -23,23 +24,22 @@ class TestServiceImplSimpleTest {
 
     @Test
     void testRunTestCheckAllQuestionDisplayed(@Mock PresenterService presenterMock) throws TestReadingException {
+        QuestionToStringMapper mapper = new QuestionToStringMapper();
         SimpleTest test = new SimpleTest(List.of(
                 new Question("Question 1", List.of(
-                        new Answer("Answer 1"),
-                        new Answer("Answer 2"),
-                        new Answer("Answer 3"),
-                        new Answer("Answer 4")),
-                        new Answer("Answer 1")),
+                        new Answer("Answer 1", true),
+                        new Answer("Answer 2", false),
+                        new Answer("Answer 3", false),
+                        new Answer("Answer 4", false))),
                 new Question("Question 2", List.of(
-                        new Answer("Answer 5"),
-                        new Answer("Answer 6"),
-                        new Answer("Answer 7"),
-                        new Answer("Answer 8")),
-                            new Answer("Answer 5")
+                        new Answer("Answer 5", false),
+                        new Answer("Answer 6", false),
+                        new Answer("Answer 7", false),
+                        new Answer("Answer 8", true))
                 )));
         when(daoMock.loadTest()).thenReturn(test);
 
-        TestService service = new TestServiceImpl(daoMock, presenterMock);
+        TestService service = new TestServiceImpl(daoMock, presenterMock, mapper);
 
         service.runTest();
 
