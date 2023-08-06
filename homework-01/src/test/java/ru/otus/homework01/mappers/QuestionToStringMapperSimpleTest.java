@@ -20,12 +20,13 @@ class QuestionToStringMapperSimpleTest {
                 new Answer("Answer 4", false));
 
         Question question = new Question("Question 1", answers);
-        String expected = """
-                   Question 1
-                       1) Answer 1
-                       2) Answer 2
-                       3) Answer 3
-                       4) Answer 4""";
+
+        String newLine = System.getProperty("line.separator");
+        String expected = "Question 1" + newLine
+                + "    1) Answer 1" + newLine
+                + "    2) Answer 2" + newLine
+                + "    3) Answer 3" + newLine
+                + "    4) Answer 4";
 
         assertEquals(expected, mapper.map(question));
     }

@@ -18,18 +18,18 @@ import java.util.Scanner;
 public class TestDaoCsv implements TestDao {
     private final String sourcePath;
 
-    private final String colDelimeter;
+    private final String colDelimiter;
 
-    private final String answersDelimeter;
+    private final String answersDelimiter;
 
-    private final String validationDelimeter;
+    private final String validationDelimiter;
 
-    public TestDaoCsv(String sourcePath, String colDelimeter, String answersDelimeter, String validationDelimeter) {
+    public TestDaoCsv(String sourcePath, String colDelimiter, String answersDelimiter, String validationDelimiter) {
 
         this.sourcePath = sourcePath;
-        this.colDelimeter = colDelimeter;
-        this.answersDelimeter = answersDelimeter;
-        this.validationDelimeter = validationDelimeter;
+        this.colDelimiter = colDelimiter;
+        this.answersDelimiter = answersDelimiter;
+        this.validationDelimiter = validationDelimiter;
     }
 
     @Override
@@ -56,9 +56,9 @@ public class TestDaoCsv implements TestDao {
     }
 
     private Question getQuestionFromString(String line) {
-        String[] cols = line.split(colDelimeter);
+        String[] cols = line.split(colDelimiter);
         String questionText = cols[0];
-        List<Answer> answers = Arrays.stream(cols[1].split(answersDelimeter))
+        List<Answer> answers = Arrays.stream(cols[1].split(answersDelimiter))
                 .map(this::getAnswerFromString)
                 .toList();
 
@@ -66,7 +66,7 @@ public class TestDaoCsv implements TestDao {
     }
 
     private Answer getAnswerFromString(String answerString) {
-        String[] answerParts = answerString.split(validationDelimeter);
+        String[] answerParts = answerString.split(validationDelimiter);
         return new Answer(answerParts[0], Boolean.valueOf(answerParts[1]));
     }
 }

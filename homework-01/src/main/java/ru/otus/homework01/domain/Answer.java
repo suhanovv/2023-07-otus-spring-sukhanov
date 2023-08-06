@@ -3,7 +3,7 @@ package ru.otus.homework01.domain;
 public class Answer {
     private final String answerText;
 
-    private final Boolean isValid;
+    private final boolean isValid;
 
     public Answer(String answerText, Boolean isValid) {
         this.answerText = answerText;
