@@ -1,0 +1,5 @@
+How much is 1+1?,0::false::1;10::false::2;2::true::3;4::false::4
+Capital of Russia?,Bangladesh::false::1;Saint-Petersburg::false::2;Moscow::true::3;Tokio::false::4
+How much is 2 * 2?,1::false::1;4::true::2;8::false::3;16::false::4
+When is International Women's Day celebrated?,1 January::false::1;23 February::false::2;8 March::true::3;1 April::false::4
+What is name of company with apple logo?,Apple::true::1;Amazon::false::2;Toshiba::false::3;Facebook::false::4
