@@ -1,4 +1,4 @@
-package ru.otus.homework02.mappers;
+package ru.otus.homework02.converters;
 
 import org.junit.jupiter.api.Test;
 import ru.otus.homework02.domain.Answer;
@@ -6,13 +6,13 @@ import ru.otus.homework02.domain.Question;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class QuestionMapperImplSimpleTest {
+class QuestionToStringConverterSimpleTest {
 
     @Test
-    void testMapShouldReturnValidString() {
-        QuestionMapperImpl mapper = new QuestionMapperImpl();
+    void testConvertShouldReturnValidString() {
+        QuestionToStringConverter converter = new QuestionToStringConverter();
         List<Answer> answers = List.of(
                 new Answer("Answer 1", true, 1),
                 new Answer("Answer 2", false, 2),
@@ -28,6 +28,6 @@ class QuestionMapperImplSimpleTest {
                 + "    3) Answer 3" + newLine
                 + "    4) Answer 4";
 
-        assertEquals(expected, mapper.mapToString(question));
+        assertEquals(expected, converter.convert(question));
     }
 }

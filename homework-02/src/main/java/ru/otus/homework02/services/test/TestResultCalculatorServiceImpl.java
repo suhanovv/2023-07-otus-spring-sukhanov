@@ -1,22 +1,33 @@
 package ru.otus.homework02.services.test;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ru.otus.homework02.config.TestResultCalculatorConfig;
 import ru.otus.homework02.domain.Answer;
-import ru.otus.homework02.domain.StudentAnswers;
+import ru.otus.homework02.domain.Student;
 import ru.otus.homework02.domain.TestResult;
 
-public class TestResultCalculatorServiceImpl implements TestResultCalculatorService {
-    private final int successBaselinePercent;
+import java.util.List;
 
-    public TestResultCalculatorServiceImpl(int successBaselinePercent) {
-        this.successBaselinePercent = successBaselinePercent;
+@Service
+public class TestResultCalculatorServiceImpl implements TestResultCalculatorService {
+    private final TestResultCalculatorConfig config;
+
+    @Autowired
+    public TestResultCalculatorServiceImpl(TestResultCalculatorConfig config) {
+        this.config = config;
     }
 
     @Override
-    public TestResult getTestResult(StudentAnswers answers) {
-        int totalAnswersCount = answers.getAnswers().size();
-        long validAnswersCount = answers.getAnswers().stream().filter(Answer::getValid).count();
+    public TestResult getTestResult(Student student, List<Answer> studentAnswers) {
+        int totalAnswersCount = studentAnswers.size();
+        long validAnswersCount = studentAnswers.stream().filter(Answer::isValid).count();
         int validAnswersPercent = (int) ((validAnswersCount / (double) totalAnswersCount) * 100);
 
-        return new TestResult(answers.getStudent(), validAnswersPercent >= successBaselinePercent, validAnswersPercent);
+        return new TestResult(
+                student,
+                validAnswersPercent >= config.getSuccessBaselinePercent(),
+                validAnswersPercent,
+                studentAnswers);
     }
 }

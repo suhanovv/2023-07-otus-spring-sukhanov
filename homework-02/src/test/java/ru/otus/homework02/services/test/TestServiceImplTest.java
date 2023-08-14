@@ -4,12 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.otus.homework02.dao.TestDao;
 import ru.otus.homework02.domain.Answer;
 import ru.otus.homework02.domain.Question;
 import ru.otus.homework02.domain.SimpleTest;
 import ru.otus.homework02.domain.Student;
-import ru.otus.homework02.domain.StudentAnswers;
 
 import java.util.List;
 
@@ -18,9 +16,6 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TestServiceImplTest {
-
-    @Mock
-    private TestDao daoMock;
 
     @Mock
     private QuestionProcess questionProcessMock;
@@ -50,19 +45,24 @@ class TestServiceImplTest {
                 .thenReturn(test.getQuestions().get(0).getAnswers().get(2))
                 .thenReturn(test.getQuestions().get(0).getAnswers().get(3));
 
-        TestService testService = new TestServiceImpl(daoMock, questionProcessMock, testResultCalculatorMock);
+        TestService testService = new TestServiceImpl(questionProcessMock, testResultCalculatorMock);
         testService.executeTest(test, student);
 
         verify(testResultCalculatorMock)
                 .getTestResult(argThat(x -> {
+                            assertThat(x)
+                                    .isEqualTo(student);
+                            return true;
+                        }
+                ), argThat(x -> {
                     assertThat(x)
-                        .usingRecursiveComparison()
-                        .isEqualTo(new StudentAnswers(student, List.of(
+                            .usingRecursiveComparison()
+                        .isEqualTo(List.of(
                             test.getQuestions().get(0).getAnswers().get(2),
                             test.getQuestions().get(0).getAnswers().get(3)
-                        )));
+                        ));
                     return true;
-                }
-                ));
+                }));
+
     }
 }

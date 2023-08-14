@@ -1,5 +1,10 @@
 package ru.otus.homework02.domain;
 
+import lombok.Getter;
+
+import java.util.List;
+
+@Getter
 public class TestResult {
     private final boolean isSuccess;
 
@@ -7,21 +12,13 @@ public class TestResult {
 
     private final Student student;
 
-    public TestResult(Student student, boolean isSuccess, int validAnswersPercent) {
+    private final List<Answer> studentAnswers;
+
+    public TestResult(Student student, boolean isSuccess, int validAnswersPercent, List<Answer> studentAnswers) {
         this.isSuccess = isSuccess;
         this.validAnswersPercent = validAnswersPercent;
         this.student = student;
+        this.studentAnswers = studentAnswers;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
-    public boolean isSuccess() {
-        return isSuccess;
-    }
-
-    public int getValidAnswersPercent() {
-        return validAnswersPercent;
-    }
 }

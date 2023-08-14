@@ -1,5 +1,8 @@
 package ru.otus.homework02.domain;
 
+import lombok.Getter;
+
+@Getter
 public class Student {
     private final String firstName;
 
@@ -10,11 +13,4 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
 }

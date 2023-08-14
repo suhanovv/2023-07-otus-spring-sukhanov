@@ -1,5 +1,8 @@
 package ru.otus.homework02.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import ru.otus.homework02.config.DaoConfig;
 import ru.otus.homework02.dao.exceptions.TestReadingException;
 import ru.otus.homework02.domain.Answer;
 import ru.otus.homework02.domain.Question;
@@ -15,28 +18,22 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+@Repository
 public class TestDaoCsv implements TestDao {
-    private final String sourcePath;
 
-    private final String colDelimiter;
+    private final DaoConfig daoConfig;
 
-    private final String answersDelimiter;
+    @Autowired
+    public TestDaoCsv(DaoConfig daoConfig) {
 
-    private final String validationDelimiter;
-
-    public TestDaoCsv(String sourcePath, String colDelimiter, String answersDelimiter, String validationDelimiter) {
-
-        this.sourcePath = sourcePath;
-        this.colDelimiter = colDelimiter;
-        this.answersDelimiter = answersDelimiter;
-        this.validationDelimiter = validationDelimiter;
+        this.daoConfig = daoConfig;
     }
 
     @Override
     public SimpleTest loadTest() throws TestReadingException {
         List<Question> questions = new ArrayList<>();
 
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream(sourcePath)) {
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(daoConfig.getSourcePath())) {
 
             if (is == null) {
                 throw new TestReadingException("File with test not found");
@@ -56,9 +53,9 @@ public class TestDaoCsv implements TestDao {
     }
 
     private Question getQuestionFromString(String line) {
-        String[] cols = line.split(colDelimiter);
+        String[] cols = line.split(daoConfig.getColDelimiter());
         String questionText = cols[0];
-        List<Answer> answers = Arrays.stream(cols[1].split(answersDelimiter))
+        List<Answer> answers = Arrays.stream(cols[1].split(daoConfig.getAnswersDelimiter()))
                 .map(this::getAnswerFromString)
                 .toList();
 
@@ -66,7 +63,7 @@ public class TestDaoCsv implements TestDao {
     }
 
     private Answer getAnswerFromString(String answerString) {
-        String[] answerParts = answerString.split(validationDelimiter);
+        String[] answerParts = answerString.split(daoConfig.getValidationDelimiter());
         return new Answer(answerParts[0], Boolean.valueOf(answerParts[1]), Integer.parseInt(answerParts[2]));
     }
 }

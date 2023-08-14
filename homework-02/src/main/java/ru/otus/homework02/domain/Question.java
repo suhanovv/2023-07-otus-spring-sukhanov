@@ -1,8 +1,11 @@
 package ru.otus.homework02.domain;
 
 
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
 public class Question {
     private final String questionText;
 
@@ -13,11 +16,4 @@ public class Question {
         this.answers = answers;
     }
 
-    public String getQuestionText() {
-        return questionText;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
-    }
 }

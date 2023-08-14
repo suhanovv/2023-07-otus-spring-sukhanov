@@ -1,28 +1,19 @@
 package ru.otus.homework02.domain;
 
+import lombok.Getter;
+
+@Getter
 public class Answer {
     private final String answerText;
 
     private final boolean isValid;
 
-    private final int number;
+    private final int id;
 
 
-    public Answer(String answerText, Boolean isValid, int number) {
+    public Answer(String answerText, Boolean isValid, int id) {
         this.answerText = answerText;
         this.isValid = isValid;
-        this.number = number;
-    }
-
-    public String getAnswerText() {
-        return answerText;
-    }
-
-    public Boolean getValid() {
-        return isValid;
-    }
-
-    public int getNumber() {
-        return number;
+        this.id = id;
     }
 }
