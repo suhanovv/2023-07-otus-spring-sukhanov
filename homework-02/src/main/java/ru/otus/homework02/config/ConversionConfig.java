@@ -9,7 +9,7 @@ import ru.otus.homework02.converters.TestResultToStringConverter;
 import java.util.Set;
 
 @Configuration
-public class ConversionConfiguration {
+public class ConversionConfig {
 
     @Bean
     ConversionServiceFactoryBean conversionService() {
