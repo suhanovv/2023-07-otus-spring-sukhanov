@@ -16,10 +16,7 @@ public class ConversionConfig {
             Converter<Question, String> questionStringConverter) {
         ConversionServiceFactoryBean bean = new ConversionServiceFactoryBean();
         bean.setConverters(
-                Set.of(
-                        questionStringConverter
-//                        testResultStringConverter
-                )
+                Set.of(questionStringConverter)
         );
         return bean;
     }
