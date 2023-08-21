@@ -5,14 +5,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.homework.config.DaoConfig;
-import ru.otus.homework.config.LocaleProvider;
 import ru.otus.homework.dao.exceptions.TestReadingException;
 import ru.otus.homework.domain.Answer;
 import ru.otus.homework.domain.Question;
 import ru.otus.homework.domain.SimpleTest;
 
 import java.util.List;
-import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -24,7 +22,7 @@ class TestDaoCsvTest {
     private DaoConfig configMock;
 
     @Mock
-    private LocaleProvider localeProvider;
+    private TestFileNameProvider fileNameProvider;
 
     @Test
     void loadTest() throws TestReadingException {
@@ -42,13 +40,12 @@ class TestDaoCsvTest {
                         new Answer("4", true, 4)
                 ))
         ));
-        when(configMock.getSourcePath()).thenReturn("questions/");
         when(configMock.getColDelimiter()).thenReturn(",");
         when(configMock.getAnswersDelimiter()).thenReturn(";");
         when(configMock.getValidationDelimiter()).thenReturn("::");
-        when(localeProvider.getCurrent()).thenReturn(Locale.forLanguageTag("en-En"));
+        when(fileNameProvider.getFilename()).thenReturn("questions/en.csv");
 
-        TestDao dao = new TestDaoCsv(configMock, localeProvider);
+        TestDao dao = new TestDaoCsv(configMock, fileNameProvider);
         SimpleTest test = dao.loadTest();
 
         assertThat(test).usingRecursiveComparison().isEqualTo(expectedTest);

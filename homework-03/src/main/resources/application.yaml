@@ -14,4 +14,4 @@ spring:
     fallback-to-system-locale: false
 
 localization:
-  locale: en-EN
+  locale: ru-RU

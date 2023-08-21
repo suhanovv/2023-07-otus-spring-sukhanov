@@ -25,11 +25,11 @@ public class StudentRequestInfoServiceImpl implements StudentRequestInfoService 
 
     private String getFirstName() {
         return ioService.readStringWithPrompt(
-                localizationService.getMessage("student.prompt.firstname") + ": ");
+                localizationService.getMessage("student.prompt.firstname") + " ");
     }
 
     private String getLastName() {
         return ioService.readStringWithPrompt(
-                localizationService.getMessage("student.prompt.lastname") + ": ");
+                localizationService.getMessage("student.prompt.lastname") + " ");
     }
 }

@@ -1,6 +1,6 @@
 package ru.otus.homework.services.test;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import ru.otus.homework.domain.Answer;
@@ -11,6 +11,7 @@ import ru.otus.homework.services.localization.LocalizationService;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
     private final IOService ioService;
 
@@ -18,22 +19,13 @@ public class QuestionServiceImpl implements QuestionService {
 
     private final LocalizationService localizationService;
 
-    @Autowired
-    public QuestionServiceImpl(
-            IOService ioService,
-            ConversionService conversionService,
-            LocalizationService localizationService) {
-        this.ioService = ioService;
-        this.conversionService = conversionService;
-        this.localizationService = localizationService;
-    }
 
     @Override
     public Answer getUserAnswer(Question question) {
         ioService.outputStringWithNewline(conversionService.convert(question, String.class));
         while (true) {
             int answerNumber = ioService.readIntWithPrompt(
-                    localizationService.getMessage("answer.prompt") + ": ");
+                    localizationService.getMessage("answer.prompt") + " ");
             Optional<Answer> userAnswer = question.getAnswers().stream()
                     .filter(i -> i.getId() == answerNumber)
                     .findFirst();

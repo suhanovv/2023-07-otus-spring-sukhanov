@@ -1,9 +1,8 @@
 package ru.otus.homework.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.otus.homework.config.DaoConfig;
-import ru.otus.homework.config.LocaleProvider;
 import ru.otus.homework.dao.exceptions.TestReadingException;
 import ru.otus.homework.domain.Answer;
 import ru.otus.homework.domain.Question;
@@ -20,27 +19,19 @@ import java.util.List;
 import java.util.Scanner;
 
 @Repository
+@AllArgsConstructor
 public class TestDaoCsv implements TestDao {
 
     private final DaoConfig daoConfig;
 
-    private final LocaleProvider localeProvider;
-
-    @Autowired
-    public TestDaoCsv(DaoConfig daoConfig, LocaleProvider localeProvider) {
-
-        this.daoConfig = daoConfig;
-        this.localeProvider = localeProvider;
-    }
+    private final TestFileNameProvider fileNameProvider;
 
     @Override
     public SimpleTest loadTest() throws TestReadingException {
         List<Question> questions = new ArrayList<>();
 
-        String lang = localeProvider.getCurrent().getLanguage();
-
         try (InputStream is = getClass().getClassLoader().getResourceAsStream(
-                daoConfig.getSourcePath() + lang + ".csv")) {
+                fileNameProvider.getFilename())) {
 
             if (is == null) {
                 throw new TestReadingException("File with test not found");
