@@ -1,0 +1,17 @@
+testDao:
+  csv:
+    sourcePath: "questions/"
+    colDelimiter: ","
+    answersDelimiter: ";"
+    validationDelimiter: "::"
+test:
+  successBaselinePercent: 75
+
+
+spring:
+  messages:
+    basename: messages
+    fallback-to-system-locale: false
+
+localization:
+  locale: ru-RU
