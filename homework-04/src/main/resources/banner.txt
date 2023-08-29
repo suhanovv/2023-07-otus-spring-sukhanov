@@ -1,0 +1,11 @@
+${AnsiBackground.BRIGHT_GREEN}   ____  _              ${AnsiBackground.BRIGHT_YELLOW} _______        _   ${AnsiBackground.BRIGHT_RED}                        ${AnsiBackground.DEFAULT}
+${AnsiBackground.BRIGHT_GREEN}  / __ \| |             ${AnsiBackground.BRIGHT_YELLOW}|__   __|      | |  ${AnsiBackground.BRIGHT_RED}     /\                 ${AnsiBackground.DEFAULT}
+${AnsiBackground.BRIGHT_GREEN} | |  | | |_ _   _ ___  ${AnsiBackground.BRIGHT_YELLOW}   | | ___  ___| |_ ${AnsiBackground.BRIGHT_RED}    /  \   _ __  _ __   ${AnsiBackground.DEFAULT}
+${AnsiBackground.BRIGHT_GREEN} | |  | | __| | | / __| ${AnsiBackground.BRIGHT_YELLOW}   | |/ _ \/ __| __|${AnsiBackground.BRIGHT_RED}   / /\ \ | '_ \| '_ \  ${AnsiBackground.DEFAULT}
+${AnsiBackground.BRIGHT_GREEN} | |__| | |_| |_| \__ \ ${AnsiBackground.BRIGHT_YELLOW}   | |  __/\__ \ |_ ${AnsiBackground.BRIGHT_RED}  / ____ \| |_) | |_) | ${AnsiBackground.DEFAULT}
+${AnsiBackground.BRIGHT_GREEN}  \____/ \__|\__,_|___/ ${AnsiBackground.BRIGHT_YELLOW}   |_|\___||___/\__|${AnsiBackground.BRIGHT_RED} /_/    \_\ .__/| .__/  ${AnsiBackground.DEFAULT}
+${AnsiBackground.BRIGHT_GREEN}                        ${AnsiBackground.BRIGHT_YELLOW}                    ${AnsiBackground.BRIGHT_RED}          | |   | |     ${AnsiBackground.DEFAULT}
+${AnsiBackground.BRIGHT_GREEN}                        ${AnsiBackground.BRIGHT_YELLOW}                    ${AnsiBackground.BRIGHT_RED}          |_|   |_|     ${AnsiBackground.DEFAULT}
+${AnsiBackground.DEFAULT}
+${application.title} ${application.version}
+Powered by Spring Boot ${spring-boot.version}
