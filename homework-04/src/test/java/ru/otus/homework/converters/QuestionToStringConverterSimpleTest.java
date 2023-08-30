@@ -1,6 +1,7 @@
 package ru.otus.homework.converters;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import ru.otus.homework.domain.Answer;
 import ru.otus.homework.domain.Question;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
 class QuestionToStringConverterSimpleTest {
 
     @Test

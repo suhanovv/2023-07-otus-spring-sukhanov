@@ -1,6 +1,7 @@
 package ru.otus.homework.dao;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.otus.homework.config.DaoConfig;
@@ -23,6 +24,9 @@ class TestDaoCsvTest {
     @MockBean
     private TestFileNameProvider fileNameProvider;
 
+    @Autowired
+    private TestDao dao;
+
     @Test
     void loadTest() throws TestReadingException {
         SimpleTest expectedTest = new SimpleTest(List.of(
@@ -44,7 +48,6 @@ class TestDaoCsvTest {
         when(configMock.getValidationDelimiter()).thenReturn("::");
         when(fileNameProvider.getFilename()).thenReturn("questions/en.csv");
 
-        TestDao dao = new TestDaoCsv(configMock, fileNameProvider);
         SimpleTest test = dao.loadTest();
 
         assertThat(test).usingRecursiveComparison().isEqualTo(expectedTest);

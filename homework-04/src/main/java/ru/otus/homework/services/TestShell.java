@@ -36,16 +36,16 @@ public class TestShell {
         return getIdentificationOkMessage();
     }
 
-    private String getIdentificationOkMessage() {
-        return localizationService.getMessage("shell.identification.ok",
-                this.student.getLastName(),
-                this.student.getFirstName());
-    }
-
     @ShellMethod(key = {"r", "run-test"}, value = "Run Test")
     @ShellMethodAvailability(value = "isStudentLogin")
     public void runTest() {
         testRunner.runForStudent(student);
+    }
+
+    private String getIdentificationOkMessage() {
+        return localizationService.getMessage("shell.identification.ok",
+                this.student.getLastName(),
+                this.student.getFirstName());
     }
 
     private Availability isStudentLogin() {

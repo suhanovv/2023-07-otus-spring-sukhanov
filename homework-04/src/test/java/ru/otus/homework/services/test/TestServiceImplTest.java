@@ -1,6 +1,7 @@
 package ru.otus.homework.services.test;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.otus.homework.domain.Answer;
@@ -21,6 +22,9 @@ class TestServiceImplTest {
 
     @MockBean
     private TestResultCalculatorService testResultCalculatorMock;
+
+    @Autowired
+    private TestService testService;
 
     @Test
     void executeTestCheckCalculatorServiceCalledWithValidArg() {
@@ -44,7 +48,6 @@ class TestServiceImplTest {
                 .thenReturn(test.getQuestions().get(0).getAnswers().get(2))
                 .thenReturn(test.getQuestions().get(0).getAnswers().get(3));
 
-        TestService testService = new TestServiceImpl(questionServiceMock, testResultCalculatorMock);
         testService.executeTest(test, student);
 
         verify(testResultCalculatorMock)

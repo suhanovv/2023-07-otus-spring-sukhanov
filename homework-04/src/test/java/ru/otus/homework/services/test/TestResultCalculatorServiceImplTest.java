@@ -3,6 +3,7 @@ package ru.otus.homework.services.test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.otus.homework.config.TestResultCalculatorConfig;
@@ -22,11 +23,13 @@ class TestResultCalculatorServiceImplTest {
     @MockBean
     private TestResultCalculatorConfig configMock;
 
+    @Autowired
+    private TestResultCalculatorService testResultCalculatorService;
+
     @ParameterizedTest
     @MethodSource("studentAnswers")
     void getTestResult(Student student, TestResult expectedResult, List<Answer> answers) {
         when(configMock.getSuccessBaselinePercent()).thenReturn(50);
-        TestResultCalculatorService testResultCalculatorService = new TestResultCalculatorServiceImpl(configMock);
 
         TestResult actualResult = testResultCalculatorService.getTestResult(student, answers);
 
