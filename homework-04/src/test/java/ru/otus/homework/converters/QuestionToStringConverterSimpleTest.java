@@ -1,6 +1,7 @@
 package ru.otus.homework.converters;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.otus.homework.domain.Answer;
 import ru.otus.homework.domain.Question;
@@ -12,9 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class QuestionToStringConverterSimpleTest {
 
+    @Autowired
+    QuestionToStringConverter converter;
+
     @Test
     void testConvertShouldReturnValidString() {
-        QuestionToStringConverter converter = new QuestionToStringConverter();
         List<Answer> answers = List.of(
                 new Answer("Answer 1", true, 1),
                 new Answer("Answer 2", false, 2),
