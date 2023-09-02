@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class QuestionToStringConverterSimpleTest {
 
     @Autowired
-    QuestionToStringConverter converter;
+    private QuestionToStringConverter converter;
 
     @Test
     void testConvertShouldReturnValidString() {
