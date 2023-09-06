@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.test.annotation.DirtiesContext;
 import ru.otus.homework.domain.Author;
 import ru.otus.homework.domain.Book;
 import ru.otus.homework.domain.Genre;
@@ -15,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @JdbcTest
 @Import(BookDaoJdbc.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class BookDaoJdbcTest {
 
     @Autowired
@@ -25,13 +23,16 @@ class BookDaoJdbcTest {
     void insertShouldCreateNewBook() {
         var author = new Author(1, "Роберт", "Мартин");
         var genre = new Genre(1, "Техническая литература");
-        var newBook = new Book("Чистый Agile", 2000, author, genre);
+        var expectedBook = new Book("Чистый Agile", 2000, author, genre);
+        var books = dao.getAll();
 
-        var expectedBook = new Book(2, "Чистый Agile", 2000, author, genre);
+        assertThat(books)
+                .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
+                .doesNotContain(expectedBook);
 
-        var actualBook = dao.insert(newBook);
+        var actualBook = dao.insert(expectedBook);
 
-        assertThat(actualBook).usingRecursiveComparison().isEqualTo(expectedBook);
+        assertThat(actualBook).usingRecursiveComparison().ignoringFields("id").isEqualTo(expectedBook);
     }
 
     @Test

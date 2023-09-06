@@ -1,14 +1,12 @@
 package ru.otus.homework.shell;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.homework.converters.GenresListToStringConverter;
-import ru.otus.homework.services.genres.CreateGenreService;
-import ru.otus.homework.services.genres.FindGenreService;
-import ru.otus.homework.services.genres.ModifyGenreService;
-import ru.otus.homework.services.genres.RemoveGenreService;
+import ru.otus.homework.services.genres.GenreService;
 import ru.otus.homework.services.genres.dto.CreateGenreDto;
 import ru.otus.homework.services.genres.dto.UpdateGenreDto;
 import ru.otus.homework.services.genres.exceptions.GenreAlreadyUsedException;
@@ -18,62 +16,56 @@ import ru.otus.homework.services.genres.exceptions.GenreNotFoundException;
 @RequiredArgsConstructor
 public class GenresShell {
 
-    private final FindGenreService findService;
+    private final GenreService genreService;
 
-    private final CreateGenreService createService;
+    private final GenresListToStringConverter listConversionService;
 
-    private final ModifyGenreService modifyService;
-
-    private final RemoveGenreService removeService;
-
-    private final GenresListToStringConverter conversionService;
+    private final ConversionService conversionService;
 
 
-    @ShellMethod
+    @ShellMethod(value = "Show all genres", key = {"list-genres"})
     public String listGenres() {
-        return conversionService.convert(findService.getAll());
+        return listConversionService.convert(genreService.getAll());
     }
 
-    @ShellMethod
+    @ShellMethod(value = "Display genre", key = {"show-genre"})
     public String showGenre(@ShellOption long id) {
         try {
-            return findService.get(id).toString();
+            return conversionService.convert(genreService.get(id), String.class);
         } catch (GenreNotFoundException e) {
             return "Genre not found";
         }
     }
 
-    @ShellMethod
+    @ShellMethod(value = "Create new genre", key = {"create-genre"})
     public String createGenre(@ShellOption String name) {
         var input = new CreateGenreDto(name);
-        var newGenre = createService.createFromInput(input);
+        var newGenre = genreService.create(input);
 
-        return "Genre created " + newGenre;
+        return "Genre created " + conversionService.convert(newGenre, String.class);
     }
 
-    @ShellMethod
+    @ShellMethod(value = "Update genre", key = {"update-genre"})
     public String updateGenre(
             @ShellOption long id,
             @ShellOption(defaultValue = ShellOption.NULL) String name) {
 
         var input = new UpdateGenreDto(id, name);
         try {
-            var updatedGenre = modifyService.modifyFromInput(input);
-            return "Genre " + updatedGenre + " updated";
+            var updatedGenre = genreService.modify(input);
+            return "Genre " + conversionService.convert(updatedGenre, String.class) + " updated";
         } catch (GenreNotFoundException e) {
             return "Genre not found";
         }
     }
 
-    @ShellMethod
+    @ShellMethod(value = "Delete genre", key = {"remove-genre"})
     public String removeGenre(@ShellOption long id) {
         try {
-            removeService.remove(id);
+            genreService.remove(id);
             return "Genre with id: " + id + " removed";
         } catch (GenreAlreadyUsedException e) {
             return "Genre can't be delete";
-        }  catch (GenreNotFoundException e) {
-            return "Genre not found";
         }
     }
 }

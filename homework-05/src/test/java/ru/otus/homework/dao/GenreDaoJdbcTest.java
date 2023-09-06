@@ -5,17 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.test.annotation.DirtiesContext;
-import ru.otus.homework.domain.Author;
 import ru.otus.homework.domain.Genre;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 @JdbcTest
 @Import(GenreDaoJdbc.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class GenreDaoJdbcTest {
 
     @Autowired
@@ -23,13 +19,17 @@ class GenreDaoJdbcTest {
 
     @Test
     void insertShouldCreateNewGenre() {
-        var newGenre = new Genre("Ужасные ужасы");
+        var expectedGenre = new Genre("Ужасные ужасы");
+        var genres = dao.getAll();
 
-        var expectedGenre = new Genre(3, "Ужасные ужасы");
+        assertThat(genres)
+                .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
+                .doesNotContain(expectedGenre);
 
-        var actualGenre = dao.insert(newGenre);
 
-        assertThat(actualGenre).usingRecursiveComparison().isEqualTo(expectedGenre);
+        var actualGenre = dao.insert(expectedGenre);
+
+        assertThat(actualGenre).usingRecursiveComparison().ignoringFields("id").isEqualTo(expectedGenre);
     }
 
     @Test
