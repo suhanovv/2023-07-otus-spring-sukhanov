@@ -3,7 +3,7 @@ package ru.otus.homework.services.genres;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ru.otus.homework.dao.GenreDao;
 import ru.otus.homework.domain.Genre;
 import ru.otus.homework.services.genres.dto.CreateGenreDto;
@@ -13,7 +13,7 @@ import ru.otus.homework.services.genres.exceptions.GenreNotFoundException;
 
 import java.util.List;
 
-@Repository
+@Service
 @RequiredArgsConstructor
 public class GenreServiceImpl implements GenreService {
     private final GenreDao dao;

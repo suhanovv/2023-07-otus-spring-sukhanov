@@ -1,8 +1,6 @@
 package ru.otus.homework.dao;
 
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -21,7 +19,6 @@ import java.util.Map;
 
 @Repository
 @AllArgsConstructor
-@Configuration
 public class BookDaoJdbc implements BookDao {
 
     private final NamedParameterJdbcOperations namedParameterJdbcOperations;
@@ -86,12 +83,7 @@ public class BookDaoJdbc implements BookDao {
     @Override
     public void deleteById(long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
-        var affectedRows = namedParameterJdbcOperations.update(
-                "delete from books where id = :id", params
-        );
-        if (affectedRows == 0) {
-            throw new EmptyResultDataAccessException(1);
-        }
+        namedParameterJdbcOperations.update("delete from books where id = :id", params);
     }
 
     private static class BookMapper implements RowMapper<Book> {

@@ -2,7 +2,7 @@ package ru.otus.homework.services.books;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ru.otus.homework.dao.BookDao;
 import ru.otus.homework.domain.Book;
 import ru.otus.homework.services.authors.AuthorService;
@@ -17,7 +17,7 @@ import ru.otus.homework.services.genres.exceptions.GenreNotFoundException;
 
 import java.util.List;
 
-@Repository
+@Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 

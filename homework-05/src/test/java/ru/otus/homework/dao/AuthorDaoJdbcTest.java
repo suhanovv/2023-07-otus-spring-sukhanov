@@ -77,11 +77,4 @@ class AuthorDaoJdbcTest {
 
     }
 
-    @Test
-    void deleteByIdNotFoundAuthorThrowException() {
-
-        assertThatThrownBy(
-                () -> dao.deleteById(300))
-                .isInstanceOf(EmptyResultDataAccessException.class);
-    }
 }

@@ -1,7 +1,6 @@
 package ru.otus.homework.dao;
 
 import lombok.AllArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -60,12 +59,7 @@ public class GenreDaoJdbc implements GenreDao {
     @Override
     public void deleteById(long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
-        var affectedRows = namedParameterJdbcOperations.update(
-                "delete from genres where id = :id", params
-        );
-        if (affectedRows == 0) {
-            throw new EmptyResultDataAccessException(1);
-        }
+        namedParameterJdbcOperations.update("delete from genres where id = :id", params);
     }
 
     private static class GenreMapper implements RowMapper<Genre> {

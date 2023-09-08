@@ -91,11 +91,4 @@ class BookDaoJdbcTest {
                 .isInstanceOf(EmptyResultDataAccessException.class);
     }
 
-    @Test
-    void deleteByIdNotFoundBookThrowException() {
-
-        assertThatThrownBy(
-                () -> dao.deleteById(300))
-                .isInstanceOf(EmptyResultDataAccessException.class);
-    }
 }

@@ -78,11 +78,4 @@ class GenreDaoJdbcTest {
                 .isInstanceOf(EmptyResultDataAccessException.class);
     }
 
-    @Test
-    void deleteByIdNotFoundGenreThrowException() {
-
-        assertThatThrownBy(
-                () -> dao.deleteById(300))
-                .isInstanceOf(EmptyResultDataAccessException.class);
-    }
 }
