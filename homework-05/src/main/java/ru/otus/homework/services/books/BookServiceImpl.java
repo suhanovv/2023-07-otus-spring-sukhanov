@@ -60,29 +60,29 @@ public class BookServiceImpl implements BookService {
 
         var oldBook = get(book.getId());
 
-        updateTitleFromInput(oldBook, book);
-        updateYearFromInput(oldBook, book);
-        updateAuthorFromInput(oldBook, book);
-        updateGenreFromInput(oldBook, book);
+        updateTitle(oldBook, book);
+        updateYear(oldBook, book);
+        updateAuthor(oldBook, book);
+        updateGenre(oldBook, book);
 
         dao.update(oldBook);
 
         return oldBook;
     }
 
-    private void updateTitleFromInput(Book oldBook, UpdateBookDto book) {
+    private void updateTitle(Book oldBook, UpdateBookDto book) {
         if (book.getTitle() != null) {
             oldBook.setTitle(book.getTitle());
         }
     }
 
-    private void updateYearFromInput(Book oldBook, UpdateBookDto book) {
+    private void updateYear(Book oldBook, UpdateBookDto book) {
         if (book.getYear() != 0) {
             oldBook.setYear(book.getYear());
         }
     }
 
-    private void updateAuthorFromInput(Book oldBook, UpdateBookDto book) throws ModifyBookException {
+    private void updateAuthor(Book oldBook, UpdateBookDto book) throws ModifyBookException {
         if (book.getAuthorId() != 0) {
             try {
                 var author = authorService.get(book.getAuthorId());
@@ -93,7 +93,7 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    private void updateGenreFromInput(Book oldBook, UpdateBookDto book) throws ModifyBookException {
+    private void updateGenre(Book oldBook, UpdateBookDto book) throws ModifyBookException {
         if (book.getGenreId() != 0) {
             try {
                 var genre = genreService.get(book.getGenreId());
