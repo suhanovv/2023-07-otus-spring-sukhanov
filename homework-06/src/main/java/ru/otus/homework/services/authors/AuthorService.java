@@ -17,5 +17,5 @@ public interface AuthorService {
 
     Author modify(UpdateAuthorDto author) throws AuthorNotFoundException;
 
-    void remove(long id) throws AuthorAlreadyUsedException;
+    void remove(long id) throws AuthorAlreadyUsedException, AuthorNotFoundException;
 }

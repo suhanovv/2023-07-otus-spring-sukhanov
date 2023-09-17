@@ -18,6 +18,6 @@ public interface GenreService {
 
     Genre modify(UpdateGenreDto genre) throws GenreNotFoundException;
 
-    void remove(long id) throws GenreAlreadyUsedException;
+    void remove(long id) throws GenreAlreadyUsedException, GenreNotFoundException;
 
 }

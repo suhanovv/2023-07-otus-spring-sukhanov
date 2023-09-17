@@ -64,6 +64,8 @@ public class AuthorsShell {
             return "Author with id: " + id + " removed";
         } catch (AuthorAlreadyUsedException e) {
             return "Author can't be deleted";
+        } catch (AuthorNotFoundException e) {
+            return "Author not found";
         }
     }
 }

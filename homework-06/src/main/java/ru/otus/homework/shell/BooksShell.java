@@ -87,7 +87,11 @@ public class BooksShell {
 
     @ShellMethod(value = "Delete book", key = {"remove-book"})
     public String removeBook(@ShellOption long id) {
-        bookService.remove(id);
+        try {
+            bookService.remove(id);
+        } catch (BookNotFoundException e) {
+            return "Book not found";
+        }
         return "Book with id: " + id + " removed";
 
     }

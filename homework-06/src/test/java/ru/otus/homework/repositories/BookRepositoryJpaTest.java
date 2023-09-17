@@ -39,11 +39,10 @@ class BookRepositoryJpaTest {
 
     @Test
     void updateShouldUpdateBook() {
-        var expectedBook = new Book(1, "Чистый код", 2019,
+        var expectedBook = em.persistFlushFind(new Book(0, "Чистейший код", 2019,
                 new Author(1, "Роберт", "Мартин"),
-                new Genre(1, "Техническая литература"));
-        var oldBook = em.find(Book.class,1);
-        assertThat(oldBook).usingRecursiveComparison().isEqualTo(expectedBook);
+                new Genre(1, "Техническая литература")));
+
 
         expectedBook.setTitle("Сказка про чистый код");
         expectedBook.setPublishYear(2023);
@@ -52,7 +51,7 @@ class BookRepositoryJpaTest {
 
         repositoryJpa.update(expectedBook);
 
-        var actualBook = em.find(Book.class, 1);
+        var actualBook = em.find(Book.class, expectedBook.getId());
 
         assertThat(actualBook).usingRecursiveComparison().isEqualTo(expectedBook);
 
@@ -83,9 +82,8 @@ class BookRepositoryJpaTest {
         var newBook = em.persistFlushFind(new Book(0, "Чистый Agile", 2019,
                 new Author(1, "Роберт", "Мартин"),
                 new Genre(1, "Техническая литература")));
-        em.detach(newBook);
 
-        repositoryJpa.deleteById(newBook.getId());
+        repositoryJpa.delete(newBook);
 
         var actual = em.find(Book.class, newBook.getId());
         assertThat(actual).isNull();

@@ -2,7 +2,6 @@ package ru.otus.homework.repositories;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -46,9 +45,7 @@ public class CommentRepositoryJpa implements CommentRepository {
     }
 
     @Override
-    public void deleteById(long id) {
-        Query query = em.createQuery("delete from Comment c where c.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public void delete(Comment comment) {
+        em.remove(comment);
     }
 }

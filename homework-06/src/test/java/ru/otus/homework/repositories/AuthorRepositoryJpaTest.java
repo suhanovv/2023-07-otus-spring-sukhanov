@@ -70,9 +70,8 @@ class AuthorRepositoryJpaTest {
     @Test
     void deleteByIdShouldDeleteCreatedAuthor() {
         var newAuthor = em.persistFlushFind(new Author(0, "Василий", "Петров"));
-        em.detach(newAuthor);
 
-        repositoryJpa.deleteById(newAuthor.getId());
+        repositoryJpa.delete(newAuthor);
 
         var actual = em.getEntityManager().find(Author.class, newAuthor.getId());
         assertThat(actual).isNull();

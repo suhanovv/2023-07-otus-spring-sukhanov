@@ -66,7 +66,11 @@ public class CommentShell {
 
     @ShellMethod(value = "Delete comment", key = {"remove-comment"})
     public String removeComment(@ShellOption long id) {
-        commentService.remove(id);
+        try {
+            commentService.remove(id);
+        } catch (CommentNotFoundException e) {
+            return "Comment not found";
+        }
         return "Comment with id: " + id + " removed";
     }
 

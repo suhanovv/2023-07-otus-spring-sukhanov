@@ -68,9 +68,8 @@ class GenreRepositoryJpaTest {
     @Test
     void deleteByIdShouldDeleteCreatedGenre() {
         var newGenre = em.persistFlushFind(new Genre(0, "Проза"));
-        em.detach(newGenre);
 
-        repositoryJpa.deleteById(newGenre.getId());
+        repositoryJpa.delete(newGenre);
 
         var actual = em.find(Genre.class, newGenre.getId());
         assertThat(actual).isNull();

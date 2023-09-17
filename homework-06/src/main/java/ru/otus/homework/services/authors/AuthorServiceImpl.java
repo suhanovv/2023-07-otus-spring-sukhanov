@@ -59,9 +59,10 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Transactional
     @Override
-    public void remove(long id) throws AuthorAlreadyUsedException {
+    public void remove(long id) throws AuthorAlreadyUsedException, AuthorNotFoundException {
+        var author = get(id);
         try {
-            repository.deleteById(id);
+            repository.delete(author);
         } catch (DataIntegrityViolationException e) {
             throw new AuthorAlreadyUsedException("Author id: " + id + " can't be delete");
         }

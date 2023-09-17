@@ -19,5 +19,5 @@ public interface BookService {
 
     Book modify(UpdateBookDto input) throws BookNotFoundException, ModifyBookException;
 
-    void remove(long id);
+    void remove(long id) throws BookNotFoundException;
 }

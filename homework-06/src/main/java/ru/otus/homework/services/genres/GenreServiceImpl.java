@@ -53,9 +53,10 @@ public class GenreServiceImpl implements GenreService {
 
     @Transactional
     @Override
-    public void remove(long id) throws GenreAlreadyUsedException {
+    public void remove(long id) throws GenreAlreadyUsedException, GenreNotFoundException {
+        var genre = get(id);
         try {
-            repository.deleteById(id);
+            repository.delete(genre);
         } catch (DataIntegrityViolationException e) {
             throw new GenreAlreadyUsedException("Genre id: " + id + " can't be delete");
         }

@@ -48,8 +48,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional
     @Override
-    public void remove(long id) {
-        repository.deleteById(id);
+    public void remove(long id) throws CommentNotFoundException {
+        var comment = get(id);
+        repository.delete(comment);
     }
 
     @Transactional

@@ -2,8 +2,8 @@ package ru.otus.homework.repositories;
 
 import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -34,22 +34,28 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     public Optional<Book> getById(long id) {
-        return Optional.ofNullable(em.find(Book.class, id));
+        EntityGraph<?> eg = em.getEntityGraph("book-author-genre-entity-graph");
+        TypedQuery<Book> query = em.createQuery("select b from Book b where b.id = :id", Book.class);
+        query.setParameter("id", id);
+        query.setHint(FETCH.getKey(), eg);
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
     public List<Book> getAll() {
         EntityGraph<?> eg = em.getEntityGraph("book-author-genre-entity-graph");
-        TypedQuery<Book> query = em.createQuery("select b from Book b join fetch b.author join b.genre", Book.class);
+        TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
         query.setHint(FETCH.getKey(), eg);
         return query.getResultList();
     }
 
     @Override
-    public void deleteById(long id) {
-        Query query = em.createQuery("delete from Book b where b.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public void delete(Book book) {
+        em.remove(book);
     }
 
 }

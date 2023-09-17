@@ -74,8 +74,9 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public void remove(long id) {
-        repository.deleteById(id);
+    public void remove(long id) throws BookNotFoundException {
+        var book = get(id);
+        repository.delete(book);
     }
 
     private void updateTitle(Book oldBook, UpdateBookDto book) {

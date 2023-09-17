@@ -15,5 +15,5 @@ public interface CommentRepository {
 
     List<Comment> findByBook(Book book);
 
-    void deleteById(long id);
+    void delete(Comment comment);
 }

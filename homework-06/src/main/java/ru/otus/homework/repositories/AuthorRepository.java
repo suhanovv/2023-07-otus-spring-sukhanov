@@ -14,5 +14,6 @@ public interface AuthorRepository {
 
     List<Author> getAll();
 
-    void deleteById(long id);
+    void delete(Author author
+    );
 }

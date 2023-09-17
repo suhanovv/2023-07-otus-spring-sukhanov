@@ -14,5 +14,5 @@ public interface GenreRepository {
 
     List<Genre> getAll();
 
-    void deleteById(long id);
+    void delete(Genre genre);
 }

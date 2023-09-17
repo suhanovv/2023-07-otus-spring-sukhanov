@@ -74,12 +74,11 @@ class CommentRepositoryJpaTest {
     }
 
     @Test
-    void deleteById() {
+    void deleteShouldDeleteCreatedBook() {
         var book = em.find(Book.class, 1);
         var newComment = em.persistFlushFind(new Comment(0, book, "Комментарий"));
 
-        repositoryJpa.deleteById(newComment.getId());
-        em.detach(newComment);
+        repositoryJpa.delete(newComment);
 
         var actualComment = em.find(Comment.class, newComment.getId());
         assertThat(actualComment).isNull();

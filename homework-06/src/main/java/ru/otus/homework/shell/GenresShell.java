@@ -66,6 +66,8 @@ public class GenresShell {
             return "Genre with id: " + id + " removed";
         } catch (GenreAlreadyUsedException e) {
             return "Genre can't be delete";
+        } catch (GenreNotFoundException e) {
+            return "Genre not found";
         }
     }
 }
