@@ -53,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
         repository.delete(comment);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<Comment> getByBookId(long bookId) throws BookNotFoundException {
         var book = bookService.get(bookId);

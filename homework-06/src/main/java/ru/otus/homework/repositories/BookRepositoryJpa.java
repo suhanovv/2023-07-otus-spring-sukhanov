@@ -2,14 +2,15 @@ package ru.otus.homework.repositories;
 
 import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.otus.homework.models.Book;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.springframework.data.jpa.repository.EntityGraph.EntityGraphType.FETCH;
@@ -35,14 +36,10 @@ public class BookRepositoryJpa implements BookRepository {
     @Override
     public Optional<Book> getById(long id) {
         EntityGraph<?> eg = em.getEntityGraph("book-author-genre-entity-graph");
-        TypedQuery<Book> query = em.createQuery("select b from Book b where b.id = :id", Book.class);
-        query.setParameter("id", id);
-        query.setHint(FETCH.getKey(), eg);
-        try {
-            return Optional.of(query.getSingleResult());
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("jakarta.persistence.fetchgraph", eg);
+        return Optional.ofNullable(em.find(Book.class, id, properties));
+
     }
 
     @Override
