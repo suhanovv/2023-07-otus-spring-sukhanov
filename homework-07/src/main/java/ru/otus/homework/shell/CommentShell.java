@@ -26,7 +26,7 @@ public class CommentShell {
         try {
             return conversionService.convert(commentService.get(id), String.class);
         } catch (CommentNotFoundException e) {
-            return "Book not found";
+            return "Comment not found";
         }
     }
 

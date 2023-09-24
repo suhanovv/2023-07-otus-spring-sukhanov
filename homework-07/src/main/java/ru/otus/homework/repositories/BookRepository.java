@@ -15,7 +15,7 @@ public interface BookRepository extends ListCrudRepository<Book, Long> {
 
     @Override
     @EntityGraph("book-author-genre-entity-graph")
-    Optional<Book> findById(Long aLong);
+    Optional<Book> findById(Long id);
 
 }
 
