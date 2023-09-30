@@ -1,6 +1,7 @@
 package ru.otus.homework.services.genres;
 
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.homework.repositories.BookRepository;
@@ -44,19 +45,14 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public Genre modify(UpdateGenreDto genre) throws GenreNotFoundException {
         var oldGenre = get(genre.getId());
-        var genreBooks = bookRepository.findBooksByGenre(oldGenre);
 
         if (genre.getName() != null) {
             oldGenre.setName(genre.getName());
         }
-        repository.save(oldGenre);
+        val newGenre = repository.save(oldGenre);
+        bookRepository.updateBooksGenreByGenreId(oldGenre.getId(), newGenre);
 
-        if (!genreBooks.isEmpty()) {
-            genreBooks.forEach(i -> i.setGenre(oldGenre));
-            bookRepository.saveAll(genreBooks);
-        }
-
-        return oldGenre;
+        return newGenre;
     }
 
     @Transactional

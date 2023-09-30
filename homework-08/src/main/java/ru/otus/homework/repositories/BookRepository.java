@@ -8,7 +8,7 @@ import ru.otus.homework.models.Genre;
 import java.util.List;
 
 
-public interface BookRepository extends MongoRepository<Book, String> {
+public interface BookRepository extends MongoRepository<Book, String>, BookRepositoryCustom {
     List<Book> findBooksByAuthor(Author author);
 
     List<Book> findBooksByGenre(Genre genre);

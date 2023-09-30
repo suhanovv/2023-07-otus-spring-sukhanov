@@ -5,12 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import ru.otus.homework.models.Author;
 import ru.otus.homework.models.Book;
 import ru.otus.homework.models.Genre;
-import ru.otus.homework.repositories.AuthorRepository;
 import ru.otus.homework.repositories.BookRepository;
-import ru.otus.homework.repositories.GenreRepository;
 import ru.otus.homework.services.genres.dto.UpdateGenreDto;
 import ru.otus.homework.services.genres.exceptions.GenreAlreadyUsedException;
 import ru.otus.homework.services.genres.exceptions.GenreNotFoundException;
@@ -23,21 +22,18 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class GenreServiceImplTest {
 
     @Autowired
-    GenreService genreService;
+    private GenreService genreService;
 
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
 
     @Autowired
-    GenreRepository genreRepository;
-
-    @Autowired
-    AuthorRepository authorRepository;
+    private MongoTemplate mongoTemplate;
 
     @Test
     void modifyShouldAlsoUpdateGenreInBook() throws GenreNotFoundException {
-        val author = authorRepository.save(new Author("Иван", "Иванов"));
-        val genre = genreRepository.save(new Genre("сказки"));
+        val author = mongoTemplate.save(new Author("Иван", "Иванов"));
+        val genre = mongoTemplate.save(new Genre("сказки"));
         val book = bookRepository.save(new Book("Книга", 2000, author, genre));
 
         val updateGenreDto = new UpdateGenreDto(genre.getId(), "Триллер");
@@ -51,8 +47,8 @@ class GenreServiceImplTest {
 
     @Test
     void removeShouldRaiseExceptionIfBookExists() {
-        val author = authorRepository.save(new Author("Иван", "Иванов"));
-        val genre = genreRepository.save(new Genre("сказки"));
+        val author = mongoTemplate.save(new Author("Иван", "Иванов"));
+        val genre = mongoTemplate.save(new Genre("сказки"));
         bookRepository.save(new Book("Книга", 2000, author, genre));
 
         assertThatThrownBy(

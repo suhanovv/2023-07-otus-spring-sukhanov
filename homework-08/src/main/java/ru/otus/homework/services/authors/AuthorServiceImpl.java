@@ -2,6 +2,7 @@ package ru.otus.homework.services.authors;
 
 import lombok.RequiredArgsConstructor;
 
+import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.homework.repositories.AuthorRepository;
@@ -47,7 +48,6 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Author modify(UpdateAuthorDto author) throws AuthorNotFoundException {
         var oldAuthor = get(author.getId());
-        var authorBooks = bookRepository.findBooksByAuthor(oldAuthor);
 
         if (author.getFirstName() != null) {
             oldAuthor.setFirstName(author.getFirstName());
@@ -56,14 +56,10 @@ public class AuthorServiceImpl implements AuthorService {
         if (author.getLastName() != null) {
             oldAuthor.setLastName(author.getLastName());
         }
-        repository.save(oldAuthor);
+        val newAuthor = repository.save(oldAuthor);
+        bookRepository.updateBooksAuthorByAuthorId(oldAuthor.getId(), newAuthor);
 
-        if (!authorBooks.isEmpty()) {
-            authorBooks.forEach(i -> i.setAuthor(oldAuthor));
-            bookRepository.saveAll(authorBooks);
-        }
-
-        return oldAuthor;
+        return newAuthor;
     }
 
     @Transactional

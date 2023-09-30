@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import ru.otus.homework.models.Author;
 import ru.otus.homework.models.Book;
 import ru.otus.homework.models.Genre;
@@ -22,16 +23,13 @@ class BookRepositoryTest {
     private BookRepository bookRepository;
 
     @Autowired
-    private AuthorRepository authorRepository;
-
-    @Autowired
-    private GenreRepository genreRepository;
+    private MongoTemplate mongoTemplate;
 
     @Test
     void findBooksByAuthorShouldReturnExpectedBooksCount() {
-        val author1 = authorRepository.save(new Author("Не скучный", "Автор"));
-        val author2 = authorRepository.save(new Author("Cкучный", "Автор"));
-        val genre = genreRepository.save(new Genre("Проза"));
+        val author1 = mongoTemplate.save(new Author("Не скучный", "Автор"));
+        val author2 = mongoTemplate.save(new Author("Cкучный", "Автор"));
+        val genre = mongoTemplate.save(new Genre("Проза"));
         val books = bookRepository.saveAll(List.of(
                 new Book("Книга 1", 2000, author1, genre),
                 new Book("Книга 2", 2000, author1, genre),
@@ -53,9 +51,9 @@ class BookRepositoryTest {
 
     @Test
     void findBooksByGenreShouldReturnExpectedBooksCount() {
-        val author = authorRepository.save(new Author("Не скучный", "Автор"));
-        val genre1 = genreRepository.save(new Genre("Проза"));
-        val genre2 = genreRepository.save(new Genre("Детектив"));
+        val author = mongoTemplate.save(new Author("Не скучный", "Автор"));
+        val genre1 = mongoTemplate.save(new Genre("Проза"));
+        val genre2 = mongoTemplate.save(new Genre("Детектив"));
         val books = bookRepository.saveAll(List.of(
                 new Book("Книга 1", 2000, author, genre1),
                 new Book("Книга 2", 2000, author, genre2),
@@ -76,9 +74,9 @@ class BookRepositoryTest {
 
     @Test
     void countBookByAuthorShouldReturnExpectedBooksCount() {
-        val author1 = authorRepository.save(new Author("Не скучный", "Автор"));
-        val author2 = authorRepository.save(new Author("Cкучный", "Автор"));
-        val genre = genreRepository.save(new Genre("Проза"));
+        val author1 = mongoTemplate.save(new Author("Не скучный", "Автор"));
+        val author2 = mongoTemplate.save(new Author("Cкучный", "Автор"));
+        val genre = mongoTemplate.save(new Genre("Проза"));
         val books = List.of(
                 new Book("Книга 1", 2000, author1, genre),
                 new Book("Книга 2", 2000, author1, genre),
@@ -98,9 +96,9 @@ class BookRepositoryTest {
 
     @Test
     void countBookByGenreShouldReturnExpectedBooksCount() {
-        val author = authorRepository.save(new Author("Не скучный", "Автор"));
-        val genre1 = genreRepository.save(new Genre("Проза"));
-        val genre2 = genreRepository.save(new Genre("Детектив"));
+        val author = mongoTemplate.save(new Author("Не скучный", "Автор"));
+        val genre1 = mongoTemplate.save(new Genre("Проза"));
+        val genre2 = mongoTemplate.save(new Genre("Детектив"));
         val books = List.of(
                 new Book("Книга 1", 2000, author, genre1),
                 new Book("Книга 2", 2000, author, genre2),
