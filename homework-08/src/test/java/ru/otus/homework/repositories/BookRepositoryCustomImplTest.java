@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BookRepositoryCustomImplTest {
 
     @Autowired
-    BookRepositoryCustomImpl bookRepository;
+    private BookRepositoryCustomImpl bookRepository;
 
     @Autowired
     private MongoTemplate mongoTemplate;

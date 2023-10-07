@@ -4,7 +4,6 @@ import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import ru.otus.homework.models.Author;
 import ru.otus.homework.models.Book;
@@ -16,7 +15,6 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataMongoTest
-@ComponentScan({"ru.otus.homework.repositories"})
 class BookRepositoryTest {
 
     @Autowired
