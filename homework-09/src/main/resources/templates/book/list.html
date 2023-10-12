@@ -25,9 +25,9 @@
                     <td th:text="${book.genre.name}">horror</td>
                     <td>
                         <ul class="inlineList">
-                            <li><a th:href="@{/book/edit(id=${book.id})}" href="edit.html">Edit</a></li>
+                            <li><a th:href="@{/book/edit/{id}(id = ${book.id})}" href="edit.html">Edit</a></li>
                             <li>
-                                <form th:action="@{/book/remove(id=${book.id})}" method="post">
+                                <form th:action="@{/book/remove/{id}(id = ${book.id})}" method="post">
                                     <button type="submit" class="btn-link">Delete</button>
                                 </form>
                             </li>

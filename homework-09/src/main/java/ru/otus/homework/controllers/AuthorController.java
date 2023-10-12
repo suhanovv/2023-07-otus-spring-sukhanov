@@ -3,18 +3,15 @@ package ru.otus.homework.controllers;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.server.ResponseStatusException;
 import ru.otus.homework.services.authors.AuthorService;
 import ru.otus.homework.services.authors.dto.AuthorDto;
-import ru.otus.homework.services.authors.exceptions.AuthorNotFoundException;
 
 
 @Controller
@@ -30,27 +27,19 @@ public class AuthorController {
         return "author/list";
     }
 
-    @GetMapping("/author/edit")
-    public String edit(@RequestParam("id") long id, Model model) {
-        try {
-            var authorDto = authorService.get(id);
-            model.addAttribute("author", authorDto);
-        } catch (AuthorNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/author/edit/{authorId}")
+    public String edit(@PathVariable("authorId") long id, Model model) {
+        var authorDto = authorService.get(id);
+        model.addAttribute("author", authorDto);
         return "author/edit";
     }
 
     @PostMapping("/author/edit")
-    public String save(@Valid @ModelAttribute("author") AuthorDto author, BindingResult bindingResult, Model model) {
+    public String save(@Valid @ModelAttribute("author") AuthorDto author, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "author/edit";
         }
-        try {
-            authorService.modify(author);
-        } catch (AuthorNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
+        authorService.modify(author);
         return "redirect:/author";
     }
 }

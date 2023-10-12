@@ -15,10 +15,7 @@
 
       <div class="row">
         <label for="book-year-input" >Publish year:</label>
-        <select id="book-year-input" th:field="*{year}">
-          <option th:each="i : ${years}"
-                  th:value="${i}" th:text="${i}">1980</option>
-        </select>
+        <input id="book-year-input" th:field="*{year}" value="2000"/>
         <div class="errors" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Wrong book year error</div>
       </div>
 

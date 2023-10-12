@@ -4,13 +4,8 @@
     <title>Edit book</title>
   </head>
   <body>
-    <form id="edit-form" action="edit.html" th:action="@{/book/edit(id=${book.id})}" th:method="post" th:object="${book}">
+    <form id="edit-form" action="edit.html" th:action="@{/book/edit/{id}(id=${book.id})}" th:method="post" th:object="${book}">
       <h3>Book info:</h3>
-
-      <div class="row">
-        <label for="id-input">ID:</label>
-        <input id="id-input" type="text" readonly="readonly" name="id" th:value="*{id}" value="1"/>
-      </div>
 
       <div class="row">
         <label for="book-title-input" >Title:</label>
@@ -20,10 +15,7 @@
 
       <div class="row">
         <label for="book-year-input" >Publish year:</label>
-        <select id="book-year-input" th:field="*{year}">
-          <option th:each="i : ${#numbers.sequence(1980, 2023)}"
-                  th:value="${i}" th:text="${i}">1980</option>
-        </select>
+        <input id="book-year-input" th:field="*{year}" value="2000"/>
         <div class="errors" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Wrong book year error</div>
       </div>
 

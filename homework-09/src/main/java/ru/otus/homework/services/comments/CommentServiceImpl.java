@@ -7,7 +7,6 @@ import ru.otus.homework.models.Comment;
 import ru.otus.homework.repositories.CommentRepository;
 import ru.otus.homework.services.books.BookService;
 import ru.otus.homework.services.books.dto.BookDto;
-import ru.otus.homework.services.books.exceptions.BookNotFoundException;
 import ru.otus.homework.services.comments.dto.CreateCommentDto;
 import ru.otus.homework.services.comments.dto.UpdateCommentDto;
 import ru.otus.homework.services.comments.exceptions.CommentNotFoundException;
@@ -24,7 +23,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional
     @Override
-    public Comment create(CreateCommentDto comment) throws BookNotFoundException {
+    public Comment create(CreateCommentDto comment) {
         var book = BookDto.toDomain(bookService.get(comment.getBookId()));
 
         var newComment = new Comment(0, book, comment.getCommentText());
@@ -34,14 +33,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional(readOnly = true)
     @Override
-    public Comment get(long id) throws CommentNotFoundException {
+    public Comment get(long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new CommentNotFoundException("Comment with id: " + id + " not found"));
     }
 
     @Transactional
     @Override
-    public void update(UpdateCommentDto comment) throws CommentNotFoundException {
+    public void update(UpdateCommentDto comment) {
         var oldComment = get(comment.getId());
         oldComment.setCommentText(comment.getCommentText());
         repository.save(oldComment);
@@ -49,7 +48,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional
     @Override
-    public void remove(long id) throws CommentNotFoundException {
+    public void remove(long id) {
         var comment = get(id);
         repository.delete(comment);
     }

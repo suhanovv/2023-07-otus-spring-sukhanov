@@ -27,7 +27,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Transactional(readOnly = true)
     @Override
-    public GenreDto get(long id) throws GenreNotFoundException {
+    public GenreDto get(long id) {
         return GenreDto.toDto(getDomainGenre(id));
     }
 
@@ -39,7 +39,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Transactional
     @Override
-    public GenreDto modify(GenreDto genre) throws GenreNotFoundException {
+    public GenreDto modify(GenreDto genre) {
         var oldGenre = getDomainGenre(genre.getId());
 
         if (genre.getName() != null) {
@@ -52,7 +52,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Transactional
     @Override
-    public void remove(long id) throws GenreAlreadyUsedException {
+    public void remove(long id) {
         try {
             repository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
@@ -60,7 +60,7 @@ public class GenreServiceImpl implements GenreService {
         }
     }
 
-    private Genre getDomainGenre(long id) throws GenreNotFoundException {
+    private Genre getDomainGenre(long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new GenreNotFoundException("Genre with id: " + id + " not found"));
     }

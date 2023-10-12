@@ -74,17 +74,17 @@ class BookControllerTest {
         ));
 
 
-        this.mvc.perform(get("/book/edit?id=1"))
+        this.mvc.perform(get("/book/edit/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Book1")))
-                .andExpect(content().string(containsString("<option value=\"2010\" selected=\"selected\">2010</option>")))
+                .andExpect(content().string(containsString("<input id=\"book-year-input\" value=\"2010\" name=\"year\"/>")))
                 .andExpect(content().string(containsString("<option value=\"2\" selected=\"selected\">Иванов Иван</option>")))
                 .andExpect(content().string(containsString("<option value=\"2\" selected=\"selected\">Horror</option>")));
     }
 
     @Test
     void editSaveShouldCallModifyMethodOfBookService() throws Exception {
-        this.mvc.perform(post("/book/edit?id=1")
+        this.mvc.perform(post("/book/edit/1")
                 .param("id", "1")
                 .param("title", "Книга")
                 .param("year", "2010")
@@ -109,7 +109,7 @@ class BookControllerTest {
 
     @Test
     void removeShouldCallRemoveMethodOfBookService() throws Exception {
-        this.mvc.perform(post("/book/remove?id=1"))
+        this.mvc.perform(post("/book/remove/1"))
                 .andExpect(status().is(302));
 
         verify(bookService).remove(1);

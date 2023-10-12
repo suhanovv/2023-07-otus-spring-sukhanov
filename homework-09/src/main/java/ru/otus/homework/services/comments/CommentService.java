@@ -17,5 +17,5 @@ public interface CommentService {
 
     void remove(long id) throws CommentNotFoundException;
 
-    List<Comment> getByBookId(long bookId);
+    List<Comment> getByBookId(long bookId) throws BookNotFoundException;
 }

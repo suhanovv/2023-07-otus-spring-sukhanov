@@ -28,7 +28,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Transactional(readOnly = true)
     @Override
-    public AuthorDto get(long id) throws AuthorNotFoundException {
+    public AuthorDto get(long id) {
         return AuthorDto.toDto(getDomainAuthor(id));
 
     }
@@ -41,7 +41,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Transactional
     @Override
-    public AuthorDto modify(AuthorDto author) throws AuthorNotFoundException {
+    public AuthorDto modify(AuthorDto author) {
         var oldAuthor = getDomainAuthor(author.getId());
 
         if (author.getFirstName() != null) {
@@ -58,7 +58,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Transactional
     @Override
-    public void remove(long id) throws AuthorAlreadyUsedException {
+    public void remove(long id) {
         try {
             repository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
@@ -66,7 +66,7 @@ public class AuthorServiceImpl implements AuthorService {
         }
     }
 
-    private Author getDomainAuthor(long id) throws AuthorNotFoundException {
+    private Author getDomainAuthor(long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new AuthorNotFoundException("Author with id: " + id + " not found"));
     }

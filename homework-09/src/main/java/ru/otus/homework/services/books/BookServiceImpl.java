@@ -33,7 +33,7 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public BookDto create(CreateBookDto book) throws CreateBookException {
+    public BookDto create(CreateBookDto book) {
         try {
             var genre = genreService.get(book.getGenreId());
             var author = authorService.get(book.getAuthorId());
@@ -49,7 +49,7 @@ public class BookServiceImpl implements BookService {
 
     @Transactional(readOnly = true)
     @Override
-    public BookDto get(long id) throws BookNotFoundException {
+    public BookDto get(long id) {
         return BookDto.toDto(getDomainBook(id));
     }
 
@@ -62,7 +62,7 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public BookDto modify(UpdateBookDto book) throws BookNotFoundException, ModifyBookException {
+    public BookDto modify(UpdateBookDto book) {
 
         var oldBook = getDomainBook(book.getId());
 
@@ -95,7 +95,7 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    private void updateAuthor(Book oldBook, UpdateBookDto book) throws ModifyBookException {
+    private void updateAuthor(Book oldBook, UpdateBookDto book) {
         if (book.getAuthorId() != 0) {
             try {
                 var author = authorService.get(book.getAuthorId());
@@ -106,7 +106,7 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    private void updateGenre(Book oldBook, UpdateBookDto book) throws ModifyBookException {
+    private void updateGenre(Book oldBook, UpdateBookDto book) {
         if (book.getGenreId() != 0) {
             try {
                 var genre = genreService.get(book.getGenreId());
@@ -117,7 +117,7 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    private Book getDomainBook(long id) throws BookNotFoundException {
+    private Book getDomainBook(long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("Book with id: " + id + " not found"));
     }
