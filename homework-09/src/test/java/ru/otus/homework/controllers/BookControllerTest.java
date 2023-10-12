@@ -36,10 +36,10 @@ class BookControllerTest {
     private BookService bookService;
 
     @MockBean
-    AuthorService authorService;
+    private AuthorService authorService;
 
     @MockBean
-    GenreService genreService;
+    private GenreService genreService;
 
     @Test
     void listShouldRenderBooks() throws Exception {
