@@ -2,6 +2,7 @@ package ru.otus.homework.services.authors;
 
 import ru.otus.homework.services.authors.dto.AuthorDto;
 import ru.otus.homework.services.authors.dto.CreateAuthorDto;
+import ru.otus.homework.services.authors.dto.UpdateAuthorDto;
 import ru.otus.homework.services.authors.exceptions.AuthorAlreadyUsedException;
 import ru.otus.homework.services.authors.exceptions.AuthorNotFoundException;
 
@@ -14,7 +15,7 @@ public interface AuthorService {
 
     List<AuthorDto> getAll();
 
-    AuthorDto modify(AuthorDto author) throws AuthorNotFoundException;
+    AuthorDto modify(long authorId, UpdateAuthorDto author) throws AuthorNotFoundException;
 
     void remove(long id) throws AuthorAlreadyUsedException, AuthorNotFoundException;
 }

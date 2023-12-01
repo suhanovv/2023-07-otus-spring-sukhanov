@@ -17,7 +17,7 @@ public interface BookService {
 
     List<BookDto> getAll();
 
-    BookDto modify(UpdateBookDto input) throws BookNotFoundException, ModifyBookException;
+    BookDto modify(long bookId, UpdateBookDto input) throws BookNotFoundException, ModifyBookException;
 
     void remove(long id);
 }

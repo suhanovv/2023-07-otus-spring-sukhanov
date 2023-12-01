@@ -8,6 +8,7 @@ import ru.otus.homework.repositories.GenreRepository;
 import ru.otus.homework.models.Genre;
 import ru.otus.homework.services.genres.dto.CreateGenreDto;
 import ru.otus.homework.services.genres.dto.GenreDto;
+import ru.otus.homework.services.genres.dto.UpdateGenreDto;
 import ru.otus.homework.services.genres.exceptions.GenreAlreadyUsedException;
 import ru.otus.homework.services.genres.exceptions.GenreNotFoundException;
 
@@ -39,8 +40,8 @@ public class GenreServiceImpl implements GenreService {
 
     @Transactional
     @Override
-    public GenreDto modify(GenreDto genre) {
-        var oldGenre = getDomainGenre(genre.getId());
+    public GenreDto modify(long genreId, UpdateGenreDto genre) {
+        var oldGenre = getDomainGenre(genreId);
 
         if (genre.getName() != null) {
             oldGenre.setName(genre.getName());

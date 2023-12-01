@@ -8,6 +8,7 @@ import ru.otus.homework.repositories.AuthorRepository;
 import ru.otus.homework.models.Author;
 import ru.otus.homework.services.authors.dto.AuthorDto;
 import ru.otus.homework.services.authors.dto.CreateAuthorDto;
+import ru.otus.homework.services.authors.dto.UpdateAuthorDto;
 import ru.otus.homework.services.authors.exceptions.AuthorAlreadyUsedException;
 import ru.otus.homework.services.authors.exceptions.AuthorNotFoundException;
 
@@ -41,8 +42,8 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Transactional
     @Override
-    public AuthorDto modify(AuthorDto author) {
-        var oldAuthor = getDomainAuthor(author.getId());
+    public AuthorDto modify(long authorId, UpdateAuthorDto author) {
+        var oldAuthor = getDomainAuthor(authorId);
 
         if (author.getFirstName() != null) {
             oldAuthor.setFirstName(author.getFirstName());

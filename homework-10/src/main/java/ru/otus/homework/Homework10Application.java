@@ -3,7 +3,11 @@ package ru.otus.homework;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// http://127.0.0.1:8080/book
+// cd {GITHUB_ROOT_DIRECTORY}/homework-10-ui && npm install
+// cd {GITHUB_ROOT_DIRECTORY}/homework-10/target && java -jar homework-0.0.1-SNAPSHOT.jar
+// npm run dev
+// open http://localhost:9000
+
 @SpringBootApplication
 public class Homework10Application {
 

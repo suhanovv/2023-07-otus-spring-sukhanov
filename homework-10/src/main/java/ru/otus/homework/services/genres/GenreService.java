@@ -2,6 +2,7 @@ package ru.otus.homework.services.genres;
 
 import ru.otus.homework.services.genres.dto.CreateGenreDto;
 import ru.otus.homework.services.genres.dto.GenreDto;
+import ru.otus.homework.services.genres.dto.UpdateGenreDto;
 import ru.otus.homework.services.genres.exceptions.GenreAlreadyUsedException;
 import ru.otus.homework.services.genres.exceptions.GenreNotFoundException;
 
@@ -15,7 +16,7 @@ public interface GenreService {
 
     List<GenreDto> getAll();
 
-    GenreDto modify(GenreDto genre) throws GenreNotFoundException;
+    GenreDto modify(long genreId, UpdateGenreDto genre) throws GenreNotFoundException;
 
     void remove(long id) throws GenreAlreadyUsedException;
 

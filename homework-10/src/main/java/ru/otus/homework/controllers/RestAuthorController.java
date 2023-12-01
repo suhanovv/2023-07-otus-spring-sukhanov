@@ -1,23 +1,21 @@
 package ru.otus.homework.controllers;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.homework.services.authors.AuthorService;
 import ru.otus.homework.services.authors.dto.AuthorDto;
+import ru.otus.homework.services.authors.dto.UpdateAuthorDto;
 
 import java.util.List;
 
 
 @RestController
 @RequiredArgsConstructor
-public class AuthorController {
+public class RestAuthorController {
 
     private final AuthorService authorService;
 
@@ -27,23 +25,13 @@ public class AuthorController {
     }
 
     @GetMapping("/api/author/{authorId}")
-    public AuthorDto list(@PathVariable("authorId") long id) {
-        return authorService.get(id);
+    public AuthorDto get(@PathVariable("authorId") long id) {
+        return  authorService.get(id);
     }
-//
-//    @GetMapping("/api/author/edit/{authorId}")
-//    public String edit(@PathVariable("authorId") long id, Model model) {
-//        var authorDto = authorService.get(id);
-//        model.addAttribute("author", authorDto);
-//        return "author/edit";
-//    }
-//
-//    @PostMapping("/api/author/edit")
-//    public String save(@Valid @ModelAttribute("author") AuthorDto author, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return "author/edit";
-//        }
-//        authorService.modify(author);
-//        return "redirect:/author";
-//    }
+
+    @PutMapping("/api/author/{authorId}")
+    public AuthorDto update(@PathVariable("authorId") long id, @RequestBody UpdateAuthorDto author) {
+        return authorService.modify(id, author);
+    }
+
 }

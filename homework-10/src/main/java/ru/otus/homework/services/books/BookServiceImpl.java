@@ -62,9 +62,9 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public BookDto modify(UpdateBookDto book) {
+    public BookDto modify(long bookId, UpdateBookDto book) {
 
-        var oldBook = getDomainBook(book.getId());
+        var oldBook = getDomainBook(bookId);
 
         updateTitle(oldBook, book);
         updateYear(oldBook, book);

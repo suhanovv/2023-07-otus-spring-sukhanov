@@ -7,8 +7,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class UpdateAuthorDto {
-    private final long id;
-
     @NotBlank(message = "First name should'n be empty")
     private final String firstName;
 
