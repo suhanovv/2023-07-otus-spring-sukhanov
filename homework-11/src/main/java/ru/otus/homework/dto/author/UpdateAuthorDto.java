@@ -1,0 +1,15 @@
+package ru.otus.homework.dto.author;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class UpdateAuthorDto {
+    @NotBlank(message = "First name should'n be empty")
+    private final String firstName;
+
+    @NotBlank(message = "Last name should'n be empty")
+    private final String lastName;
+}

@@ -1,0 +1,17 @@
+export class Genre {
+    id: string;
+    name: string;
+
+    constructor(id: string, name: string) {
+        this.id = id;
+        this.name = name;
+    }
+
+    setId(value: string) {
+        this.id = value;
+    }
+
+    setName(value: string) {
+        this.name = value;
+    }
+}
