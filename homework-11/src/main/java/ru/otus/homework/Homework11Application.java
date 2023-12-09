@@ -5,8 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-// cd {GITHUB_ROOT_DIRECTORY}/homework-10-ui && npm install
-// cd {GITHUB_ROOT_DIRECTORY}/homework-10/target && java -jar homework-0.0.1-SNAPSHOT.jar
+// cd {GITHUB_ROOT_DIRECTORY}/homework-11-ui && npm install
+// cd {GITHUB_ROOT_DIRECTORY}/homework-11/target && java -jar homework-0.0.1-SNAPSHOT.jar
 // npm run dev
 // open http://localhost:9000
 
