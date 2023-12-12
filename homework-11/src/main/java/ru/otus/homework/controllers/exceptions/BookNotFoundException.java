@@ -1,4 +1,4 @@
-package ru.otus.homework.services.books.exceptions;
+package ru.otus.homework.controllers.exceptions;
 
 public class BookNotFoundException extends RuntimeException {
     public BookNotFoundException() {

@@ -18,9 +18,9 @@ public class UpdateBookDto {
     @PastOrPresent(message = "Year should present or past")
     private final Year year;
 
-    @NotNull(message = "Author should'n be empty")
+    @NotBlank(message = "Author should'n be empty")
     private final String authorId;
 
-    @NotNull(message = "Genre should'n be empty")
+    @NotBlank(message = "Genre should'n be empty")
     private final String genreId;
 }

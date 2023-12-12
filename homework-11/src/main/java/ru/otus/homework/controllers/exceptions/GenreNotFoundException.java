@@ -1,4 +1,4 @@
-package ru.otus.homework.services.genres.exceptions;
+package ru.otus.homework.controllers.exceptions;
 
 public class GenreNotFoundException extends RuntimeException {
 

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import ru.otus.homework.services.authors.exceptions.AuthorNotFoundException;
-import ru.otus.homework.services.books.exceptions.BookNotFoundException;
-import ru.otus.homework.services.genres.exceptions.GenreNotFoundException;
+import ru.otus.homework.controllers.exceptions.AuthorNotFoundException;
+import ru.otus.homework.controllers.exceptions.BookNotFoundException;
+import ru.otus.homework.controllers.exceptions.GenreNotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;

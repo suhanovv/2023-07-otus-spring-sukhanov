@@ -1,4 +1,4 @@
-package ru.otus.homework.services.authors.exceptions;
+package ru.otus.homework.controllers.exceptions;
 
 public class AuthorNotFoundException extends RuntimeException {
 
