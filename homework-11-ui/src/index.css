@@ -1,0 +1,44 @@
+body {
+  padding: 50px;
+}
+
+label {
+  display: inline-block;
+  width: 100px;
+}
+
+input:read-only {
+  background: lightgray;
+}
+
+.row {
+  margin-top: 10px;
+}
+
+.btn-link {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+  color: #0000EE;
+  padding: 0;
+  text-decoration: underline;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.errors {
+  color: red;
+}
+
+ul.inlineList > li {
+  display: inline;
+  list-style: none;
+  margin-right: 15px;
+}
+
+ul.inlineList > li > form {
+  display: inline;
+  list-style: none;
+  margin-right: 5px;
+}
